@@ -1,0 +1,92 @@
+extends layout
+
+block content
+  div(id="corner")
+    a(href="/personalize")
+      | Personalize!
+  div(id="container")
+    div(id="header")
+      h1
+        p
+          | #{profile.first_name}
+        p
+          | #{profile.last_name}
+          span(class="dot green")
+            | .
+      img(src=profpic, id="profpic")
+    if (typeof(profile.gender) !== 'undefined')
+      p Wow, what a
+        span(class="fancy orange")
+          |  #{profile.gender}
+        | .
+    if (typeof(profile.work) !== 'undefined')
+      p Check out the 
+        if (profile.gender == 'male')
+          | dude
+        else
+          | gal
+        | 's work experience!
+      each work, i in profile.work
+        ul
+          li
+            if (profile.gender == 'male')
+              | He
+            else
+              | She
+            |  worked
+            if (typeof(work.position) !== 'undefined')
+              |  as a #{work.position.name}
+            if (typeof(work.employer) !== 'undefined')
+              |  at 
+              a(href="http://facebook.com/profile.php?id=#{work.employer.id}")
+                | #{work.employer.name}
+            if (typeof(work.location) !== 'undefined')
+              |  in #{work.location.name}
+            if (typeof(work.projects) !== 'undefined')
+              |  and worked on the following projects!
+              each project, j in work.projects
+                ul
+                  li
+                    | #{project.name}
+                    if (typeof(project.with) !== 'undefined')
+                      |  with 
+                      each companion, k in project.with
+                        a(href="http://facebook.com/profile.php?id=#{companion.id}")
+                          | #{companion.name}
+            else
+              | !
+    if (typeof(profile.education) !== 'undefined')
+      p And get a load of this great education!
+      each school, l in profile.education
+        ul
+          li
+            if (profile.gender == 'male')
+              | He
+            else
+              | She
+            |  went to
+            if (typeof(school.type) !== 'undefined')
+              |  #{school.type} at 
+            if (typeof(school.school) !== 'undefined')
+              a(href="http://facebook.com/profile.php?id=#{school.school.id}")
+                | #{school.school.name}
+            if (typeof(school.concentraion) !== 'undefined')
+              | , concentrating in #{school.concentraion.name}  
+            if (typeof(school.year) !== 'undefined')
+              | . Class of #{school.year.name} all the way
+            | !
+            if (typeof(school.classes) !== 'undefined')
+              |  While there, he took these classes:
+              each classs, m in school.classes
+                ul
+                  li
+                    | #{classs.name}
+                    if (typeof(classs.with) !== 'undefined')
+                      |  with 
+                      each companion, n in classs.with
+                        a(href="http://facebook.com/profile.php?id=#{companion.id}")
+                          | #{companion.name}
+                        | , 
+                    if (typeof(classs.description) !== 'undefined')
+                      |  -- #{classs.description}
+                    | !
