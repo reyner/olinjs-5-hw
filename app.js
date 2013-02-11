@@ -22,7 +22,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser('coffee'));
   app.use(express.session());
-  app.use(Facebook.middleware({ appId: '183589414998540', secret: '6d2efbf9c52e69ad1afa1817d9e57c8b' }));
+  app.use(Facebook.middleware({ appId: process.env.FB_KEY, secret: process.env.FB_SECRET }));
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.methodOverride());
