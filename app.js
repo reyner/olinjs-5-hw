@@ -33,11 +33,35 @@ app.configure('development', function(){
   mongoose.connect(process.env.MONGOLAB_URI || 'localhost');
 });
 
-app.get('/', Facebook.loginRequired(), routes.index);
+function facebookGetUser() {
+  return function(req, res, next) {
+    req.facebook.getUser( function(err, user) {
+      if (!user || err){
+        res.send("you need to <a href='/login'>login</a>");
+      } else {
+        req.user = user;
+        next();
+      }
+    });
+  }
+}
+
+app.get('/', facebookGetUser(), routes.index);
+app.get('/login', Facebook.loginRequired(), function(req, res){
+  res.redirect('/');
+});
 app.get('/users', user.list);
 app.get('/users/delete_all', user.delete_all);
 app.post('/users/personalize', user.personalize);
-app.get('/profile/:user', Facebook.loginRequired(), routes.profile);
+app.get('/profile/:user', facebookGetUser(), routes.profile);
+app.get('/login', Facebook.loginRequired(), function(req, res){
+  res.redirect('/');
+});
+app.get('/logout', facebookGetUser(), function(req, res){
+  req.user = null;
+  req.session.destroy();
+  res.redirect('/');
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
