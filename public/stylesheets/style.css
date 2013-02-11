@@ -1,6 +1,4 @@
 body {
-  background-color: #f0faf0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f8fff8), to(#e8f8e8));
   font-family: "Helvetica", Arial, sans-serif;
   color: #3a3a3a;
   line-height: 18px;
@@ -10,6 +8,10 @@ body {
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+#controls {
+  display: none;
 }
 
 #container {

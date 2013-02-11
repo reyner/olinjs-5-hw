@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1 Users
+  div
+    each user, i in users
+      div(value=user) #{user.fbid} - #{user.color}

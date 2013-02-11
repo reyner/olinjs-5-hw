@@ -1,9 +1,30 @@
 extends layout
 
 block content
+  style(type="text/css")
+    body {
+        background-color: #{color};
+        background: -webkit-gradient(linear, left top, left bottom, from(#f8fff8), to(#{color}));
+    }
   div(id="corner")
-    a(href="/personalize")
+    a(href="#", id="showControls")
       | Personalize!
+    div(id="controls")
+      form(method="post", action="/users/personalize", id="controlForm")
+        input(type="radio", name="color", value="rgb(227,246,227)")
+        | Babson Green
+        br
+        input(type="radio", name="color", value="rgb(227,239,245)")
+        | Cornflower Blue
+        br
+        input(type="radio", name="color", value="rgb(246,226,226)")
+        | Fire brick
+        br
+        input(type="radio", name="color", value="rgb(233,226,245)")
+        | Lavender
+        br
+        button('type='submit')
+          | Ship it! Ship it!
   div(id="container")
     div(id="header")
       h1
